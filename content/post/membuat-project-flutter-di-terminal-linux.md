@@ -13,7 +13,7 @@ tags:
     - linux
 
 image: ""
-description: ""
+description: "Cara mudah membuat project Flutter menggunakan terminal Linux"
 ---
 
 Kali ini saya akan share pengetahuan saya untuk membuat project Flutter menggunakan terminal Linux.
