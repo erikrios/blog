@@ -16,7 +16,7 @@ image: ""
 description: "Cara mudah membuat project Flutter menggunakan terminal Linux"
 ---
 
-Kali ini saya akan share pengetahuan saya untuk membuat project Flutter menggunakan terminal Linux. Sebenarnya, cara membuat project Flutter sendiri, memiliki beberapa cara, diantaranya dengan menggunakan terminal (command prompt / bash), Visual Studio Code, Intellij IDEA, dan Android Studio.
+Kali ini saya akan share pengetahuan saya untuk membuat project Flutter menggunakan terminal Linux. Sebenarnya, untuk membuat project Flutter sendiri, memiliki beberapa cara, diantaranya dengan menggunakan terminal (command prompt / bash), Visual Studio Code, Intellij IDEA, dan Android Studio.
 
 ## Membuka Terminal
 
