@@ -26,6 +26,7 @@ func main() {
 	resume := handler.NewResumeHandler()
 	about := handler.NewAboutHandler()
 
+	// Declare the endpoints
 	r.Get("/", home.GetHome)
 	r.Get("/project", project.GetProject)
 	r.Get("/resume", resume.GetResume)
