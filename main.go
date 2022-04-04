@@ -35,5 +35,5 @@ func main() {
 	r.Handle("/static/*", http.StripPrefix("/static/", fs))
 
 	log.Printf("Server listening on port %s...\n", port)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), r))
+	log.Fatalln(http.ListenAndServe(fmt.Sprintf(":%s", port), r))
 }
