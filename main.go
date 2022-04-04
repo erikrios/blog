@@ -26,11 +26,11 @@ func main() {
 	resume := handler.NewResumeHandler()
 	about := handler.NewAboutHandler()
 
-	// Declare the endpoints
 	r.Get("/", home.GetHome)
 	r.Get("/project", project.GetProject)
 	r.Get("/resume", resume.GetResume)
 	r.Get("/about", about.GetAbout)
+	r.Get("/robots.txt", home.GetRobotsTxt)
 
 	fs := http.FileServer(http.Dir("./assets/statics"))
 	r.Handle("/static/*", http.StripPrefix("/static/", fs))

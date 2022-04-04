@@ -17,3 +17,7 @@ func (h *HomeHandler) GetHome(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 }
+
+func (h *HomeHandler) GetRobotsTxt(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("User-agent: *\nAllow: /"))
+}
