@@ -6,9 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About Me</title>
     {{template "_general_style"}} {{template "_header_style"}}
+    <link rel="stylesheet" href="/static/css/about.css" />
   </head>
   <body>
     {{template "_header"}}
+    <div class="container">
+      <img
+        id="profile"
+        src="https://avatars.githubusercontent.com/u/42199285?v=4"
+        alt="Erik Rio Setiawan Profile Picture"
+      />
+      <h1 id="name">Erik Rio Setiawan</h1>
+      <p id="description">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Soluta
+        temporibus dolores necessitatibus laudantium explicabo, molestias
+        nostrum sed maiores eaque, quo repellat culpa aliquid nihil consequatur
+        dolorem animi ullam quia voluptatibus.Blanditiis suscipit sint, tempora
+        aliquid dolorum nostrum, nulla rem, accusamus nobis hic ullam sed error
+        architecto. Impedit, quaerat doloremque dicta, dolorum dolores, debitis
+        voluptas laudantium nostrum praesentium esse magni possimus. Lorem ipsum
+        dolor sit amet consectetur, adipisicing elit. Soluta temporibus dolores
+        necessitatibus laudantium explicabo, molestias nostrum sed maiores
+        eaque, quo repellat culpa aliquid nihil consequatur dolorem animi ullam
+        quia voluptatibus.Blanditiis suscipit sint, tempora aliquid dolorum
+        nostrum, nulla rem, accusamus nobis hic ullam sed error architecto.
+        Impedit, quaerat doloremque dicta, dolorum dolores, debitis voluptas
+        laudantium nostrum praesentium esse magni possimus.
+      </p>
+      <h2 id="bio">Biography</h2>
+      <div class="bio-container">
+        <blockquote>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
+          facere, doloribus libero debitis nam fuga laborum vel omnis quam vitae
+          fugit natus? Facilis quas accusamus expedita odio similique.
+          Doloremque, veritatis.
+        </blockquote>
+      </div>
+      <div class="bio-container">
+        <img
+          id="bio-img"
+          src="/static/images/east-java.png"
+          alt="East Java Maps"
+        />
+      </div>
+    </div>
   </body>
 </html>
 {{end}}

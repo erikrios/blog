@@ -23,12 +23,12 @@ func main() {
 
 	home := handler.NewHomeHandler()
 	project := handler.NewProjectHandler()
-	contact := handler.NewContactHandler()
+	resume := handler.NewResumeHandler()
 	about := handler.NewAboutHandler()
 
 	r.Get("/", home.GetHome)
 	r.Get("/project", project.GetProject)
-	r.Get("/contact", contact.GetContact)
+	r.Get("/resume", resume.GetResume)
 	r.Get("/about", about.GetAbout)
 
 	fs := http.FileServer(http.Dir("./assets/statics"))

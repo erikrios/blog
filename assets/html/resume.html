@@ -1,15 +1,16 @@
-{{define "contact"}}
+{{define "resume"}}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Me</title>
+    <title>My Resume (Curriculum Vitae)</title>
     {{template "_general_style"}} {{template "_header_style"}}
+    <link rel="stylesheet" href="/static/css/resume.css" />
   </head>
   <body>
     {{template "_header"}}
-    <em><li>Contant me on:</li></em>
+    <embed src="/static/pdf/resume.pdf" type="application/pdf" />
   </body>
 </html>
 {{end}}

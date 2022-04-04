@@ -4,8 +4,8 @@ var navItem;
 
 if (path === "/project") {
   navItem = document.getElementById("project");
-} else if (path === "/contact") {
-  navItem = document.getElementById("contact");
+} else if (path === "/resume") {
+  navItem = document.getElementById("resume");
 } else if (path === "/about") {
   navItem = document.getElementById("about");
 } else {
