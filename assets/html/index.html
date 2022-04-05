@@ -53,7 +53,9 @@
         <div class="popular">
           <h2>Popular Articles</h2>
           <ol>
-            <li><a href="#">This is popular article 1 (10 views)</a></li>
+            {{range .Data.PopularArticles}}
+            <li><a href="#">{{.Title}} ({{.TotalViews}} views)</a></li>
+            {{end}}
           </ol>
         </div>
       </div>
