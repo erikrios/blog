@@ -13,119 +13,39 @@
 
     <div class="container">
       <div class="post">
+        {{range .Data.Articles}}
         <!-- Item -->
         <div class="item">
           <div id="title">
-            <a href="#"><h1>Instalasi Netbeans di Linux</h1></a>
+            <a href="#"><h1>{{.Title}}</h1></a>
           </div>
           <div id="published-on-author">
-            Published on 5 April 2022 by <a href="/about">Erik Rio Setiawan</a>
+            Published on {{.PublishedDate}} by <a href="/about">{{.Author}}</a>
           </div>
-          <div id="short-desc">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Distinctio, veritatis voluptatum molestiae numquam ducimus eligendi
-            sunt mollitia porro nisi voluptas. Cum odio ratione, reprehenderit
-            totam dolorum libero itaque cumque quo? Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Doloribus repellat vero provident
-            dignissimos reiciendis odio tenetur consequuntur soluta, blanditiis,
-            et similique nihil velit. Ipsum doloremque atque dolores officiis
-            optio. Mollitia.
-          </div>
+          <div id="short-desc">{{.Content}}</div>
           <div id="continue-to-read"><a href="#">Continue to read...</a></div>
           <hr />
         </div>
         <!-- Item -->
-        <!-- Item -->
-        <div class="item">
-          <div id="title">
-            <a href="#"><h1>Instalasi Netbeans di Linux</h1></a>
-          </div>
-          <div id="published-on-author">
-            Published on 5 April 2022 by <a href="#">Erik Rio Setiawan</a>
-          </div>
-          <div id="short-desc">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Distinctio, veritatis voluptatum molestiae numquam ducimus eligendi
-            sunt mollitia porro nisi voluptas. Cum odio ratione, reprehenderit
-            totam dolorum libero itaque cumque quo? Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Doloribus repellat vero provident
-            dignissimos reiciendis odio tenetur consequuntur soluta, blanditiis,
-            et similique nihil velit. Ipsum doloremque atque dolores officiis
-            optio. Mollitia.
-          </div>
-          <div id="continue-to-read"><a href="#">Continue to read...</a></div>
-          <hr />
-        </div>
-        <!-- Item -->
-        <!-- Item -->
-        <div class="item">
-          <div id="title">
-            <a href="#"><h1>Instalasi Netbeans di Linux</h1></a>
-          </div>
-          <div id="published-on-author">
-            Published on 5 April 2022 by <a href="#">Erik Rio Setiawan</a>
-          </div>
-          <div id="short-desc">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Distinctio, veritatis voluptatum molestiae numquam ducimus eligendi
-            sunt mollitia porro nisi voluptas. Cum odio ratione, reprehenderit
-            totam dolorum libero itaque cumque quo? Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Doloribus repellat vero provident
-            dignissimos reiciendis odio tenetur consequuntur soluta, blanditiis,
-            et similique nihil velit. Ipsum doloremque atque dolores officiis
-            optio. Mollitia.
-          </div>
-          <div id="continue-to-read"><a href="#">Continue to read...</a></div>
-          <hr />
-        </div>
-        <!-- Item -->
-        <!-- Item -->
-        <div class="item">
-          <div id="title">
-            <a href="#"><h1>Instalasi Netbeans di Linux</h1></a>
-          </div>
-          <div id="published-on-author">
-            Published on 5 April 2022 by <a href="#">Erik Rio Setiawan</a>
-          </div>
-          <div id="short-desc">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Distinctio, veritatis voluptatum molestiae numquam ducimus eligendi
-            sunt mollitia porro nisi voluptas. Cum odio ratione, reprehenderit
-            totam dolorum libero itaque cumque quo? Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Doloribus repellat vero provident
-            dignissimos reiciendis odio tenetur consequuntur soluta, blanditiis,
-            et similique nihil velit. Ipsum doloremque atque dolores officiis
-            optio. Mollitia.
-          </div>
-          <div id="continue-to-read"><a href="#">Continue to read...</a></div>
-          <hr />
-        </div>
-        <!-- Item -->
-        <!-- Item -->
-        <div class="item">
-          <div id="title">
-            <a href="#"><h1>Instalasi Netbeans di Linux</h1></a>
-          </div>
-          <div id="published-on-author">
-            Published on 5 April 2022 by <a href="#">Erik Rio Setiawan</a>
-          </div>
-          <div id="short-desc">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Distinctio, veritatis voluptatum molestiae numquam ducimus eligendi
-            sunt mollitia porro nisi voluptas. Cum odio ratione, reprehenderit
-            totam dolorum libero itaque cumque quo? Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Doloribus repellat vero provident
-            dignissimos reiciendis odio tenetur consequuntur soluta, blanditiis,
-            et similique nihil velit. Ipsum doloremque atque dolores officiis
-            optio. Mollitia.
-          </div>
-          <div id="continue-to-read"><a href="#">Continue to read...</a></div>
-          <hr />
-        </div>
-        <!-- Item -->
+        {{end}}
         <div class="next-prev">
-          <a id="prev" href="#">&lt; Previous</a>
-          <a id="next" href="#">Next &gt;</a>
+          {{if eq .Data.PageInfo.Page 1}}
+          <span id="prev">&lt; Previous</span>
+          {{else}}
+          <a
+            id="prev"
+            href="/?page={{.Data.PageInfo.PrevPage}}&limit={{.Data.PageInfo.Limit}}"
+            >&lt; Previous</a
+          >
+          {{end}} {{if eq .Data.PageInfo.Page .Data.PageInfo.TotalPage}}
+          <span id="next">Next &gt;</span>
+          {{else}}
+          <a
+            id="next"
+            href="/?page={{.Data.PageInfo.NextPage}}&limit={{.Data.PageInfo.Limit}}"
+            >Next &gt;</a
+          >
+          {{end}}
         </div>
       </div>
 
