@@ -1,0 +1,73 @@
+.container {
+  margin: 8px;
+  height: auto;
+  display: flex;
+}
+
+.post {
+  width: 50%;
+  padding: 8px;
+}
+
+.widget {
+  width: 50%;
+  background-color: grey;
+  height: 500px;
+  padding: 8px;
+}
+
+#published-on-author {
+  font-style: italic;
+}
+
+#short-desc {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-align: justify;
+  margin-top: 8px;
+}
+
+#continue-to-read {
+  margin-top: 8px;
+}
+
+hr {
+  background-color: transparent;
+  opacity: 0.4;
+  margin: 8px;
+}
+
+.prev-next {
+  width: 100%;
+}
+
+#prev {
+  float: left;
+}
+
+#next {
+  float: right;
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    display: block;
+  }
+
+  .post {
+    width: 95%;
+    padding: 8px;
+  }
+
+  .widget {
+    margin-top: 16px;
+    width: 95%;
+    background-color: grey;
+    height: 500px;
+    padding: 8px;
+  }
+}
