@@ -16,6 +16,7 @@ func GenerateDummyArticles(limit uint, page uint) response.ArticleList {
 			PublishedDate: fmt.Sprintf("%d %s %d", i+1, "April", 2022),
 			Author:        fmt.Sprintf("Erik %d", i+1),
 			Content:       fmt.Sprintf("%d %s", i+1, "Lorem, ipsum dolor sit amet consectetur adipisicing elit.\nDistinctio, veritatis voluptatum molestiae numquam ducimus eligendi sunt mollitia porro nisi voluptas. Cum odio ratione, reprehenderit totam dolorum libero itaque cumque quo? Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus repellat vero provident dignissimos reiciendis odio tenetur consequuntur soluta, blanditiis, et similique nihil velit. Ipsum doloremque atque dolores officiis optio. Mollitia."),
+			TotalViews:    10 - uint(i),
 		}
 		articles = append(articles, article)
 	}
@@ -31,8 +32,9 @@ func GenerateDummyArticles(limit uint, page uint) response.ArticleList {
 	pageInfo.SetNextPage()
 
 	articleList := response.ArticleList{
-		Articles: articles,
-		PageInfo: pageInfo,
+		Articles:        articles,
+		PageInfo:        pageInfo,
+		PopularArticles: articles,
 	}
 
 	return articleList

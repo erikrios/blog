@@ -12,6 +12,7 @@ type Article struct {
 	PublishedDate string
 	Author        string
 	Content       string
+	TotalViews    uint
 }
 
 type PageInfo struct {
@@ -40,6 +41,7 @@ func (p *PageInfo) SetPrevPage() {
 }
 
 type ArticleList struct {
-	Articles []Article
-	PageInfo PageInfo
+	Articles        []Article
+	PageInfo        PageInfo
+	PopularArticles []Article
 }
