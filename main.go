@@ -4,37 +4,35 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 
-	"github.com/erikrios/blog/handler"
+	"github.com/erikrios/blog/config"
+	"github.com/erikrios/blog/constant"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	_ "github.com/lib/pq"
 )
 
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
+	db, err := config.NewPostgreSQLDatabase()
+	if err != nil {
+		log.Fatal(err)
 	}
+
+	if err := db.Ping(); err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("Successfully connected to database...")
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 
-	home := handler.NewHomeHandler()
-	project := handler.NewProjectHandler()
-	resume := handler.NewResumeHandler()
-	about := handler.NewAboutHandler()
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Hello, World!"))
+	})
 
-	r.Get("/", home.GetHome)
-	r.Get("/project", project.GetProject)
-	r.Get("/resume", resume.GetResume)
-	r.Get("/about", about.GetAbout)
-	r.Get("/robots.txt", home.GetRobotsTxt)
-
-	fs := http.FileServer(http.Dir("./assets/statics"))
-	r.Handle("/static/*", http.StripPrefix("/static/", fs))
-
-	log.Printf("Server listening on port %s...\n", port)
-	log.Fatalln(http.ListenAndServe(fmt.Sprintf(":%s", port), r))
+	port := constant.PORT
+	log.Printf("Server starting at port :%d\n", port)
+	http.ListenAndServe(fmt.Sprintf(":%d", port), r)
 }
