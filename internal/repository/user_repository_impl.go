@@ -14,6 +14,19 @@ const (
 INSERT INTO users(username, name, password)
 VALUES ($1, $2, $3) RETURNING id;
 	`
+	findAllUsersQuery = `
+SELECT 
+id,
+username,
+name,
+password,
+created_at,
+updated_at,
+deleted_at
+FROM users
+WHERE deleted_at IS NULL
+ORDER BY id;
+`
 )
 
 type userRepositoryImpl struct {
@@ -45,7 +58,38 @@ func (u *userRepositoryImpl) Insert(ctx context.Context, user entity.User) (id i
 	}
 }
 
-func (u *userRepositoryImpl) FindAll(ctx context.Context) (users []entity.User, err error) { return }
+func (u *userRepositoryImpl) FindAll(ctx context.Context) (users []entity.User, err error) {
+	rows, dbErr := u.db.QueryContext(ctx, findAllUsersQuery)
+	if dbErr != nil {
+		err = fmt.Errorf("%w: %w", ErrUnknown, dbErr)
+		return
+	}
+
+	defer func(rows *sql.Rows) {
+		_ = rows.Close()
+	}(rows)
+
+	users = make([]entity.User, 0)
+	for rows.Next() {
+		var user entity.User
+		if dbErr := rows.Scan(
+			&user.ID,
+			&user.Username,
+			&user.Name,
+			&user.Password,
+			&user.CreatedAt,
+			&user.UpdatedAt,
+			&user.DeletedAt,
+		); dbErr != nil {
+			err = fmt.Errorf("%w: %w", ErrUnknown, dbErr)
+			return
+		}
+
+		users = append(users, user)
+	}
+
+	return
+}
 
 func (u *userRepositoryImpl) FindByID(ctx context.Context, id int64) (user entity.User, err error) {
 	return
