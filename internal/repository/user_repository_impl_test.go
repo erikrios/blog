@@ -147,6 +147,46 @@ func TestFindAll(t *testing.T) {
 	})
 }
 
+func TestFindByID(t *testing.T) {
+	db := createConnection(t)
+	var repo repository.UserRepository = repository.NewUserRepositoryImpl(db)
+
+	t.Run("it should return not found error, when given ID is not exists", func(t *testing.T) {
+		_, err := repo.FindByID(context.Background(), int64(util.GenerateInt(100)))
+		if err == nil {
+			t.Fatalf("want %v, got %v", repository.ErrNotFound, err)
+		}
+
+		if !errors.Is(err, repository.ErrNotFound) {
+			t.Fatalf("want %v, got %v", repository.ErrNotFound, err)
+		}
+	})
+
+	t.Run("it should successfully find valid user, when given ID is exists", func(t *testing.T) {
+		expectedUser := insertUser(t, repo)
+		gotUser, err := repo.FindByID(context.Background(), expectedUser.ID)
+		if err != nil {
+			t.Fatalf("want %v, got %v", nil, err)
+		}
+
+		if expectedUser.ID != gotUser.ID {
+			t.Fatalf("want %v, got %v", expectedUser.ID, gotUser.ID)
+		}
+
+		if expectedUser.Username != gotUser.Username {
+			t.Fatalf("want %v, got %v", expectedUser.Username, gotUser.Username)
+		}
+
+		if expectedUser.Name != gotUser.Name {
+			t.Fatalf("want %v, got %v", expectedUser.Name, gotUser.Name)
+		}
+
+		if expectedUser.Password != gotUser.Password {
+			t.Fatalf("want %v, got %v", expectedUser.Password, gotUser.Password)
+		}
+	})
+}
+
 func insertUser(t testing.TB, repo repository.UserRepository) entity.User {
 	user := entity.User{
 		Username: util.GenerateString(8),

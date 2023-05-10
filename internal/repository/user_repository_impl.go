@@ -27,6 +27,19 @@ FROM users
 WHERE deleted_at IS NULL
 ORDER BY id;
 `
+	findUserByIDQuery = `
+SELECT 
+id,
+username,
+name,
+password,
+created_at,
+updated_at,
+deleted_at
+FROM users
+WHERE id = $1
+AND deleted_at IS NULL;
+`
 )
 
 type userRepositoryImpl struct {
@@ -92,7 +105,26 @@ func (u *userRepositoryImpl) FindAll(ctx context.Context) (users []entity.User, 
 }
 
 func (u *userRepositoryImpl) FindByID(ctx context.Context, id int64) (user entity.User, err error) {
-	return
+	row := u.db.QueryRowContext(ctx, findUserByIDQuery, id)
+
+	switch dbErr := row.Scan(
+		&user.ID,
+		&user.Username,
+		&user.Name,
+		&user.Password,
+		&user.CreatedAt,
+		&user.UpdatedAt,
+		&user.DeletedAt,
+	); dbErr {
+	case sql.ErrNoRows:
+		err = fmt.Errorf("%w: %w", ErrNotFound, dbErr)
+		return
+	case nil:
+		return
+	default:
+		err = fmt.Errorf("%w: %w", ErrUnknown, dbErr)
+		return
+	}
 }
 
 func (u *userRepositoryImpl) Update(ctx context.Context, id int64, user entity.User) (err error) {
