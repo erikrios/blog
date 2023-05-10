@@ -19,3 +19,8 @@ func GenerateString(n int) string {
 
 	return string(res)
 }
+
+func GenerateInt(n int) int {
+	rand.Seed(time.Now().UnixNano())
+	return rand.Intn(n)
+}
