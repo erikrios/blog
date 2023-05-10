@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 
 	"github.com/erikrios/blog/internal/entity"
@@ -37,6 +38,20 @@ created_at,
 updated_at,
 deleted_at
 FROM users
+WHERE id = $1
+AND deleted_at IS NULL;
+`
+	updateUserQuery = `
+UPDATE users 
+SET username = $2,
+name = $3, 
+password = $4
+WHERE id = $1
+AND deleted_at IS NULL;
+`
+	deleteUserQuery = `
+UPDATE users 
+SET deleted_at = current_timestamp
 WHERE id = $1
 AND deleted_at IS NULL;
 `
@@ -128,7 +143,43 @@ func (u *userRepositoryImpl) FindByID(ctx context.Context, id int64) (user entit
 }
 
 func (u *userRepositoryImpl) Update(ctx context.Context, id int64, user entity.User) (err error) {
+	res, dbErr := u.db.ExecContext(ctx, updateUserQuery, id, user.Username, user.Name, user.Password)
+	if dbErr != nil {
+		err = fmt.Errorf("%w: %w", ErrUnknown, dbErr)
+		return
+	}
+
+	n, dbErr := res.RowsAffected()
+	if dbErr != nil {
+		err = fmt.Errorf("%w: %w", ErrUnknown, dbErr)
+		return
+	}
+
+	if n < 1 {
+		err = fmt.Errorf("%w: %w", ErrUnknown, errors.New("count: rows affected less than 1"))
+		return
+	}
+
 	return
 }
 
-func (u *userRepositoryImpl) Delete(ctx context.Context, id int64) (err error) { return }
+func (u *userRepositoryImpl) Delete(ctx context.Context, id int64) (err error) {
+	res, dbErr := u.db.ExecContext(ctx, deleteUserQuery, id)
+	if dbErr != nil {
+		err = fmt.Errorf("%w: %w", ErrUnknown, dbErr)
+		return
+	}
+
+	n, dbErr := res.RowsAffected()
+	if dbErr != nil {
+		err = fmt.Errorf("%w: %w", ErrUnknown, dbErr)
+		return
+	}
+
+	if n < 1 {
+		err = fmt.Errorf("%w: %w", ErrUnknown, errors.New("count: rows affected less than 1"))
+		return
+	}
+
+	return
+}

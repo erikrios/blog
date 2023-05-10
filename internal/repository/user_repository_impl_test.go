@@ -187,6 +187,75 @@ func TestFindByID(t *testing.T) {
 	})
 }
 
+func TestUpdate(t *testing.T) {
+	db := createConnection(t)
+	var repo repository.UserRepository = repository.NewUserRepositoryImpl(db)
+
+	t.Run("it should return error, when id is not exists", func(t *testing.T) {
+		id := int64(util.GenerateInt(10))
+		var user entity.User
+
+		err := repo.Update(context.Background(), id, user)
+		if err == nil {
+			t.Fatalf("want %v, got %v", repository.ErrUnknown, err)
+		}
+
+		if !errors.Is(err, repository.ErrUnknown) {
+			t.Fatalf("want %v, got %v", repository.ErrUnknown, err)
+		}
+	})
+
+	t.Run("it should successfully updated, when id is exists", func(t *testing.T) {
+		expectedUser := insertUser(t, repo)
+		expectedUser.Username = util.GenerateString(8)
+		expectedUser.Name = util.GenerateString(4) + " " + util.GenerateString(5)
+		expectedUser.Password = util.GenerateString(8)
+
+		err := repo.Update(context.Background(), expectedUser.ID, expectedUser)
+
+		if err != nil {
+			t.Fatalf("want %v, got %v", nil, err)
+		}
+	})
+}
+
+func TestDelete(t *testing.T) {
+	db := createConnection(t)
+	var repo repository.UserRepository = repository.NewUserRepositoryImpl(db)
+
+	t.Run("it should return error, when id is not exists", func(t *testing.T) {
+		id := int64(util.GenerateInt(10))
+
+		err := repo.Delete(context.Background(), id)
+		if err == nil {
+			t.Fatalf("want %v, got %v", repository.ErrUnknown, err)
+		}
+
+		if !errors.Is(err, repository.ErrUnknown) {
+			t.Fatalf("want %v, got %v", repository.ErrUnknown, err)
+		}
+	})
+
+	t.Run("it should successfully deleted, when id is exists", func(t *testing.T) {
+		expectedUser := insertUser(t, repo)
+
+		err := repo.Delete(context.Background(), expectedUser.ID)
+
+		if err != nil {
+			t.Fatalf("want %v, got %v", nil, err)
+		}
+
+		_, err = repo.FindByID(context.Background(), expectedUser.ID)
+		if err == nil {
+			t.Fatalf("want %v, got %v", repository.ErrNotFound, err)
+		}
+
+		if !errors.Is(err, repository.ErrNotFound) {
+			t.Fatalf("want %v, got %v", repository.ErrNotFound, err)
+		}
+	})
+}
+
 func insertUser(t testing.TB, repo repository.UserRepository) entity.User {
 	user := entity.User{
 		Username: util.GenerateString(8),
